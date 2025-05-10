@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>Zia's Windows 98 Portfolio</title>
+  <link rel="stylesheet" href="https://unpkg.com/98.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/png" href="zia.png">
+</head>
+<body>
+  <audio id="bootSound" src="https://win98icons.alexmeub.com/sounds/startup.wav" autoplay></audio>
+  
+  <div id="contextMenu">
+    <div class="item" onclick="showContextWindow('Screen Saver', 'Preparing to install Flying Toasters... Error: Too much nostalgia detected.')">🎮 Screen Saver Settings</div>
+    <div class="item" onclick="showContextWindow('Fax Wizard', 'You just sent a virtual fax. To nowhere.')">📠 Send Fax</div>
+    <div class="item" id="installClippyItem" onclick="installClippy()">📎 Install Clippy</div>
+    <div class="item wallpaper-item">🖼️ Change Wallpaper &gt;
+      <div class="submenu">
+        <div class="submenu-item" onclick="changeWallpaper('wallpaper98.png')">Default</div>
+        <div class="submenu-item" onclick="changeWallpaper('aurora.png')">Aurora</div>
+        <div class="submenu-item" onclick="changeWallpaper('spring.png')">Spring</div>
+        <div class="submenu-item" onclick="changeWallpaper('sunset.png')">Sunset</div>
+      </div>
+    </div>
+    <div class="item" onclick="showContextWindow('Properties', 'Nostalgia overload.')">🎞 Properties</div>
+  </div>
+  
+  <div class="desktop">
+    <!-- Desktop Icons -->
+    <div class="icon" onclick="toggleWindow('portfolioWindow', event)">
+      <img src="https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png" alt="">
+      <div>Portfolio</div>
+    </div>
+    <div class="icon" onclick="toggleWindow('resumeWindow', event)">
+      <img src="https://win98icons.alexmeub.com/icons/png/user_card.png" alt="Resume">
+      <div>Resume</div>
+    </div>
+    <div class="icon" onclick="toggleWindow('notepadWindow', event)">
+      <img src="https://win98icons.alexmeub.com/icons/png/notepad-5.png" alt="">
+      <div>Notepad</div>
+    </div>
+    <div class="icon" onclick="toggleWindow('terminalWindow', event)">
+      <img src="https://win98icons.alexmeub.com/icons/png/console_prompt-0.png" alt="Terminal">
+      <div>MS-DOS Prompt</div>
+    </div>
+    <div class="icon" onclick="toggleWindow('paintWindow', event)">
+      <img src="https://win98icons.alexmeub.com/icons/png/paint_old-0.png" alt="">
+      <div>Paint</div>
+    </div>
+    <div class="icon" onclick="toggleWindow('chatWindow', event)">
+      <img src="https://win98icons.alexmeub.com/icons/png/message_envelope_open-0.png" alt="">
+      <div>Message</div>
+    </div>
+    <div class="icon" onclick="toggleWindow('emailWindow', event)">
+      <img src="https://win98icons.alexmeub.com/icons/png/outlook_express-5.png" alt="Outlook Express">
+      <div>Outlook Express</div>
+    </div>
+    <div class="icon" onclick="toggleWindow('minesweeperWindow', event)">
+      <img src="https://win98icons.alexmeub.com/icons/png/minesweeper-0.png" alt="">
+      <div>Minesweeper</div>
+    </div>
+    <div class="icon" onclick="toggleWindow('recycleWindow', event)">
+      <img src="https://win98icons.alexmeub.com/icons/png/recycle_bin_full-4.png" alt="">
+      <div>Recycle Bin</div>
+    </div>
+    <div class="icon" onclick="toggleWindow('ieWindow', event)">
+      <img src="https://win98icons.alexmeub.com/icons/png/msie1-2.png" alt="Internet Explorer">
+      <div>Internet Explorer</div>
+    </div>
+  </div>
+
+  <!-- Windows -->
+  <div class="window" id="portfolioWindow" style="width: 600px; display: none;">
+    <div class="title-bar">
+      <div class="title-bar-text">
+        <img src="https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png" alt="">
+        Portfolio
+      </div>
+      <div class="title-bar-controls">
+        <button aria-label="Close" onclick="toggleWindow('portfolioWindow')"></button>
+      </div>
+    </div>
+    <div class="window-body" style="font-size: 13px;">
+      <!-- Toolbar -->
+      <div style="margin-bottom: 8px;">
+        <button onclick="goBack()">⬅ Back</button>
+        <button onclick="goForward()">➡ Forward</button>
+      </div>
+
+      <!-- Explorer-style split view -->
+      <div style="display: flex; border: 2px groove #ccc; height: 300px;">
+        <!-- Folder tree (left pane) -->
+        <div id="folderTree" style="width: 180px; background: white; overflow-y: auto; border-right: 2px groove #ccc; padding: 8px;">
+          <div class="tree-item" style="margin-bottom: 8px;" onclick="showFunnyMessage('mycomputer')">
+            <img src="https://win98icons.alexmeub.com/icons/png/mycomputer-3.png" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;">
+            <span>My Computer</span>
+          </div>
+          
+          <div class="tree-item tree-folder" style="margin-bottom: 4px; margin-left: 12px;" onclick="showFunnyMessage('drivec')">
+            <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-0.png" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;">
+            <span>Drive C:</span>
+          </div>
+          
+          <div class="tree-item tree-folder" style="margin-bottom: 4px; margin-left: 20px;">
+            <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-0.png" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;">
+            <span>Projects</span>
+          </div>
+          
+          <div class="tree-item tree-open-folder" style="margin-bottom: 4px; margin-left: 28px;" onclick="setPortfolioView(0)">
+            <img src="https://win98icons.alexmeub.com/icons/png/directory_open-0.png" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;">
+            <span>Portfolio</span>
+          </div>
+          
+          <div class="tree-item tree-folder" style="margin-bottom: 4px; margin-left: 36px;" onclick="setPortfolioView(1)">
+            <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-0.png" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;">
+            <span>Data Analytics</span>
+          </div>
+          
+          <div class="tree-item tree-folder" style="margin-bottom: 4px; margin-left: 36px;" onclick="setPortfolioView(2)">
+            <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-0.png" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;">
+            <span>AI & ML</span>
+          </div>
+          
+          <div class="tree-item" style="margin-bottom: 8px; margin-left: 12px;" onclick="showFunnyMessage('drived')">
+            <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-0.png" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;">
+            <span>Drive D:</span>
+          </div>
+          
+          <div class="tree-item tree-folder" style="margin-bottom: 8px; margin-left: 20px;" onclick="showFunnyMessage('homework')">
+            <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-0.png" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;">
+            <span>Homework</span>
+          </div>
+          
+          <div class="tree-item" style="margin-bottom: 4px; margin-left: 8px;" onclick="showFunnyMessage('network')">
+            <img src="https://win98icons.alexmeub.com/icons/png/network_normal_two_pcs-4.png" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;">
+            <span>Network</span>
+          </div>
+        </div>
+        
+        <!-- Content pane (right pane) -->
+        <div id="portfolioContent" style="flex: 1; background: white; padding: 10px; overflow-y: auto;">
+          <!-- Root view will be rendered here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="window" id="notepadWindow">
+    <div class="title-bar">
+      <div class="title-bar-text">
+        <img src="https://win98icons.alexmeub.com/icons/png/notepad-5.png" alt="">
+        Notepad - easter_eggs.txt
+      </div>
+      <div class="title-bar-controls">
+        <button aria-label="Close" onclick="toggleWindow('notepadWindow')"></button>
+      </div>
+    </div>
+    <div class="window-body">
+      <textarea style="width:100%; height:150px; resize:none; font-size: 14px;">
+EASTER EGGS:
+• Try right-clicking
+• Type 'help' in the MS-DOS prompt  
+• Try to close the sticky note (hint: you can't)
+      </textarea>
+    </div>
+  </div>
+
+  <div class="window" id="paintWindow" style="width: 700px; height: 500px; display: none;">
+    <div class="title-bar">
+      <div class="title-bar-text">
+        <img src="https://win98icons.alexmeub.com/icons/png/paint_old-2.png" alt="">
+        Paint
+      </div>
+      <div class="title-bar-controls">
+        <button aria-label="Close" onclick="toggleWindow('paintWindow')"></button>
+      </div>
+    </div>
+    <div class="window-body" style="padding: 0; margin: 0; display: flex; flex-direction: column; height: calc(100% - 20px); overflow: hidden;">
+      <!-- Paint Toolbar -->
+      <div class="paint-toolbar" style="display: flex; padding: 5px; background: silver; border-bottom: 1px solid #999;">
+        <div style="display: flex; flex-wrap: wrap; width: 210px;">
+          <div class="paint-tool" onclick="selectPaintTool('pencil')" data-tool="pencil" style="width: 25px; height: 25px; margin: 2px; border: 1px solid #666; display: flex; align-items: center; justify-content: center; cursor: pointer; background: #ddd;">
+            <img src="https://win98icons.alexmeub.com/icons/png/pen_2-0.png" style="width: 16px; height: 16px;">
+          </div>
+        </div>
+      </div>
+      
+      <!-- Color Palette -->
+      <div class="paint-colors" style="display: flex; padding: 5px; background: silver; border-bottom: 1px solid #999;">
+        <div style="display: grid; grid-template-columns: repeat(8, 1fr); gap: 2px; width: 100%;">
+          <div class="color-swatch" onclick="setPaintColor('#000000')" style="width: 15px; height: 15px; background: #000000; border: 1px solid #333; cursor: pointer;"></div>
+          <div class="color-swatch" onclick="setPaintColor('#808080')" style="width: 15px; height: 15px; background: #808080; border: 1px solid #333; cursor: pointer;"></div>
+          <div class="color-swatch" onclick="setPaintColor('#800000')" style="width: 15px; height: 15px; background: #800000; border: 1px solid #333; cursor: pointer;"></div>
+          <div class="color-swatch" onclick="setPaintColor('#808000')" style="width: 15px; height: 15px; background: #808000; border: 1px solid #333; cursor: pointer;"></div>
+          <div class="color-swatch" onclick="setPaintColor('#008000')" style="width: 15px; height: 15px; background: #008000; border: 1px solid #333; cursor: pointer;"></div>
+          <div class="color-swatch" onclick="setPaintColor('#008080')" style="width: 15px; height: 15px; background: #008080; border: 1px solid #333; cursor: pointer;"></div>
+          <div class="color-swatch" onclick="setPaintColor('#000080')" style="width: 15px; height: 15px; background: #000080; border: 1px solid #333; cursor: pointer;"></div>
+          <div class="color-swatch" onclick="setPaintColor('#800080')" style="width: 15px; height: 15px; background: #800080; border: 1px solid #333; cursor: pointer;"></div>
+          
+          <div class="color-swatch" onclick="setPaintColor('#FFFFFF')" style="width: 15px; height: 15px; background: #FFFFFF; border: 1px solid #333; cursor: pointer;"></div>
+          <div class="color-swatch" onclick="setPaintColor('#C0C0C0')" style="width: 15px; height: 15px; background: #C0C0C0; border: 1px solid #333; cursor: pointer;"></div>
+          <div class="color-swatch" onclick="setPaintColor('#FF0000')" style="width: 15px; height: 15px; background: #FF0000; border: 1px solid #333; cursor: pointer;"></div>
+          <div class="color-swatch" onclick="setPaintColor('#FFFF00')" style="width: 15px; height: 15px; background: #FFFF00; border: 1px solid #333; cursor: pointer;"></div>
+          <div class="color-swatch" onclick="setPaintColor('#00FF00')" style="width: 15px; height: 15px; background: #00FF00; border: 1px solid #333; cursor: pointer;"></div>
+          <div class="color-swatch" onclick="setPaintColor('#00FFFF')" style="width: 15px; height: 15px; background: #00FFFF; border: 1px solid #333; cursor: pointer;"></div>
+          <div class="color-swatch" onclick="setPaintColor('#0000FF')" style="width: 15px; height: 15px; background: #0000FF; border: 1px solid #333; cursor: pointer;"></div>
+          <div class="color-swatch" onclick="setPaintColor('#FF00FF')" style="width: 15px; height: 15px; background: #FF00FF; border: 1px solid #333; cursor: pointer;"></div>
+        </div>
+      </div>
+      
+      <!-- Canvas Area -->
+      <div style="flex: 1; overflow: auto; background: #CCC; padding: 5px; position: relative;">
+        <canvas id="paint-canvas" style="background: white; border: 1px solid #999; cursor: crosshair;"></canvas>
+      </div>
+      
+      <!-- Status Bar -->
+      <div style="padding: 3px 5px; background: silver; border-top: 1px solid #999; font-size: 12px; display: flex;">
+        <div id="paint-coordinates" style="margin-right: 15px;">0,0 px</div>
+        <div id="paint-canvas-size">640 x 480 px</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="window" id="chatWindow">
+    <div class="title-bar">
+      <div class="title-bar-text">
+        <img src="https://win98icons.alexmeub.com/icons/png/msmsgs-0.png" alt="">
+        Messenger
+      </div>
+      <div class="title-bar-controls">
+        <button aria-label="Close" onclick="toggleWindow('chatWindow')"></button>
+      </div>
+    </div>
+    <div class="window-body">
+      <p><b>Stranger:</b> hey zia how can i get this portfolio?</p>
+      <p><b>Zia:</b> its in my github. please fork it.</p>
+    </div>
+  </div>
+
+  <div class="window" id="emailWindow" style="width: 650px; height: 450px; display: none;">
+    <div class="title-bar">
+      <div class="title-bar-text">
+        <img src="https://win98icons.alexmeub.com/icons/png/mailbox_world-4.png" alt="">
+        Outlook Express
+      </div>
+      <div class="title-bar-controls">
+        <button aria-label="Minimize"></button>
+        <button aria-label="Maximize"></button>
+        <button aria-label="Close" onclick="toggleWindow('emailWindow')"></button>
+      </div>
+    </div>
+    <div class="window-body" style="padding: 0; margin: 0; display: flex; flex-direction: column; height: calc(100% - 20px); overflow: hidden;">
+      <!-- Toolbar -->
+      <div style="padding: 4px; background: silver; border-bottom: 1px solid #999; display: flex;">
+        <button style="margin-right: 2px;">New Mail</button>
+        <button style="margin-right: 2px;">Reply</button>
+        <button style="margin-right: 2px;">Delete</button>
+        <button>Send/Recv</button>
+      </div>
+      
+      <!-- Main Email Area -->
+      <div style="flex: 1; display: flex; overflow: hidden;">
+        <!-- Folders Panel -->
+        <div style="width: 150px; background: #f0f0f0; border-right: 1px solid #999; overflow-y: auto; padding: 5px;">
+          <div style="font-weight: bold; margin-bottom: 5px;">Folders</div>
+          <div class="email-folder active-folder" onclick="showEmailFolder('inbox')" style="padding: 3px; cursor: pointer; background: #cbe8fb;">
+            <img src="https://win98icons.alexmeub.com/icons/png/inbox-0.png" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;">
+            <span>Inbox (3)</span>
+          </div>
+          <div class="email-folder" onclick="showEmailFolder('spam')" style="padding: 3px; cursor: pointer;">
+            <img src="https://win98icons.alexmeub.com/icons/png/warning-8.png" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;">
+            <span>Spam (3)</span>
+          </div>
+          <div class="email-folder" style="padding: 3px; cursor: pointer;">
+            <img src="https://win98icons.alexmeub.com/icons/png/message_envelope-0.png" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;">
+            <span>Sent</span>
+          </div>
+          <div class="email-folder" style="padding: 3px; cursor: pointer;">
+            <img src="https://win98icons.alexmeub.com/icons/png/delete_message-0.png" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;">
+            <span>Deleted Items</span>
+          </div>
+        </div>
+        
+        <!-- Email List and Content -->
+        <div style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
+          <!-- Email List -->
+          <div id="email-list" style="height: 150px; overflow-y: auto; border-bottom: 1px solid #999;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+              <thead>
+                <tr style="background: #e6e6e6; position: sticky; top: 0;">
+                  <th style="text-align: left; padding: 4px; border-right: 1px solid #ccc; width: 150px;">From</th>
+                  <th style="text-align: left; padding: 4px; border-right: 1px solid #ccc;">Subject</th>
+                  <th style="text-align: left; padding: 4px; width: 130px;">Received</th>
+                </tr>
+              </thead>
+              <tbody id="inbox-emails">
+                <tr class="email-item active-email" onclick="showEmail('email1')" style="cursor: pointer; background: #cbe8fb;">
+                  <td style="padding: 4px; border-right: 1px solid #eee;">Bill Gates</td>
+                  <td style="padding: 4px; border-right: 1px solid #eee;">Congratulations on your portfolio</td>
+                  <td style="padding: 4px;">10/5/25 10:15 AM</td>
+                </tr>
+                <tr class="email-item" onclick="showEmail('email2')" style="cursor: pointer;">
+                  <td style="padding: 4px; border-right: 1px solid #eee;">Microsoft Recruitment</td>
+                  <td style="padding: 4px; border-right: 1px solid #eee;">We want to hire you immediately!</td>
+                  <td style="padding: 4px;">10/3/25 9:42 AM</td>
+                </tr>
+                <tr class="email-item" onclick="showEmail('email3')" style="cursor: pointer;">
+                  <td style="padding: 4px; border-right: 1px solid #eee;">Windows Update</td>
+                  <td style="padding: 4px; border-right: 1px solid #eee;">Your Windows 98 is ready for Y2K</td>
+                  <td style="padding: 4px;">9/28/25 2:17 PM</td>
+                </tr>
+              </tbody>
+              <tbody id="spam-emails" style="display: none;">
+                <tr class="email-item" onclick="showEmail('spam1')" style="cursor: pointer;">
+                  <td style="padding: 4px; border-right: 1px solid #eee;">Nigerian Prince</td>
+                  <td style="padding: 4px; border-right: 1px solid #eee;">URGENT: 5 million dollars waiting for you</td>
+                  <td style="padding: 4px;">10/1/25 3:24 AM</td>
+                </tr>
+                <tr class="email-item" onclick="showEmail('spam2')" style="cursor: pointer;">
+                  <td style="padding: 4px; border-right: 1px solid #eee;">Free Antivirus</td>
+                  <td style="padding: 4px; border-right: 1px solid #eee;">Your computer has 147 viruses!</td>
+                  <td style="padding: 4px;">9/24/25 11:59 PM</td>
+                </tr>
+                <tr class="email-item" onclick="showEmail('spam3')" style="cursor: pointer;">
+                  <td style="padding: 4px; border-right: 1px solid #eee;">Microsoft Tech Support</td>
+                  <td style="padding: 4px; border-right: 1px solid #eee;">DO NOT REDEEM THE GIFT CARDS!!</td>
+                  <td style="padding: 4px;">10/4/25 5:37 AM</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <!-- Email Content -->
+          <div id="email-content" style="flex: 1; overflow: auto; padding: 10px; background: white;">
+            <div id="email1" class="email-body" style="display: block;">
+              <div style="border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 10px;">
+                <div><strong>From:</strong> Bill Gates &lt;bill@microsoft.com&gt;</div>
+                <div><strong>Subject:</strong> Congratulations on your portfolio</div>
+                <div><strong>Date:</strong> Tuesday, October 5, 2025 10:15 AM</div>
+                <div><strong>To:</strong> tasnimzia98@email.com</div>
+              </div>
+              <div style="font-family: 'Times New Roman', serif; line-height: 1.4;">
+                <p>Dear Zia,</p>
+                <p>I just saw your Windows 98-themed portfolio and I'm absolutely blown away. This brings back so many memories!</p>
+                <p>I'd like to invite you to Redmond to discuss bringing back Windows 98 as our primary operating system. I believe we made a mistake with all these fancy new versions.</p>
+                <p>We'll offer you a competitive salary of $98,000,000 per year.</p>
+                <p>Best regards,<br>Bill Gates<br>Founder, Microsoft</p>
+                <p><em>Sent from my iPhone</em></p>
+              </div>
+            </div>
+            
+            <div id="email2" class="email-body" style="display: none;">
+              <div style="border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 10px;">
+                <div><strong>From:</strong> Microsoft Recruitment &lt;careers@microsoft.com&gt;</div>
+                <div><strong>Subject:</strong> We want to hire you immediately!</div>
+                <div><strong>Date:</strong> Tuesday, October 3, 2025 9:42 AM</div>
+                <div><strong>To:</strong> tasnimzia98@email.com</div>
+              </div>
+              <div style="font-family: 'Times New Roman', serif; line-height: 1.4;">
+                <p>Hello Zia,</p>
+                <p>Your Windows 98 portfolio has caught the attention of our entire executive team. We would like to hire you immediately for a position we just created: Chief Nostalgia Officer.</p>
+                <p>Your job would involve recreating all our current products to look and function exactly like they did in 1998.</p>
+                <p>Please respond with your start date.</p>
+                <p>Regards,<br>Recruitment Team<br>Microsoft Corporation</p>
+              </div>
+            </div>
+            
+            <div id="email3" class="email-body" style="display: none;">
+              <div style="border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 10px;">
+                <div><strong>From:</strong> Windows Update &lt;update@windows.com&gt;</div>
+                <div><strong>Subject:</strong> Your Windows 98 is ready for Y2K</div>
+                <div><strong>Date:</strong> Monday, September 28, 2025 2:17 PM</div>
+                <div><strong>To:</strong> tasnimzia98@email.com</div>
+              </div>
+              <div style="font-family: 'Times New Roman', serif; line-height: 1.4;">
+                <p>IMPORTANT NOTICE</p>
+                <p>Your Windows 98 system has been patched and is now Y2K compliant. You can safely use your computer after January 1, 2000.</p>
+                <p>It is recommended that you back up all your important files to 3.5" floppy disks before December 31, 1999.</p>
+                <p>Thank you for choosing Windows 98, the most stable operating system ever created.</p>
+              </div>
+            </div>
+            
+            <div id="spam1" class="email-body" style="display: none;">
+              <div style="border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 10px;">
+                <div><strong>From:</strong> Nigerian Prince &lt;prince@nigeria-royal-family.net&gt;</div>
+                <div><strong>Subject:</strong> URGENT: 5 million dollars waiting for you</div>
+                <div><strong>Date:</strong> Tuesday, October 1, 2025 3:24 AM</div>
+                <div><strong>To:</strong> tasnimzia98@email.com</div>
+              </div>
+              <div style="font-family: 'Times New Roman', serif; line-height: 1.4;">
+                <p>DEAR TRUSTED FRIEND,</p>
+                <p>I AM PRINCE ADEBAYO ADEYEMI, THE RIGHTFUL HEIR TO THE NIGERIAN ROYAL FORTUNE OF $5,000,000 (FIVE MILLION US DOLLARS).</p>
+                <p>DUE TO POLITICAL UNREST, I NEED YOUR ASSISTANCE TO TRANSFER THIS MONEY. IN RETURN, I WILL SHARE 25% WITH YOU.</p>
+                <p>TO PROCEED, I ONLY NEED YOUR BANK DETAILS AND SOCIAL SECURITY NUMBER.</p>
+                <p>PLEASE REPLY URGENTLY!</p>
+                <p>YOURS FAITHFULLY,<br>PRINCE ADEBAYO ADEYEMI</p>
+              </div>
+            </div>
+            
+            <div id="spam2" class="email-body" style="display: none;">
+              <div style="border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 10px;">
+                <div><strong>From:</strong> Free Antivirus &lt;security@totally-legitimate-antivirus.com&gt;</div>
+                <div><strong>Subject:</strong> Your computer has 147 viruses!</div>
+                <div><strong>Date:</strong> Friday, September 24, 2025 11:59 PM</div>
+                <div><strong>To:</strong> tasnimzia98@email.com</div>
+              </div>
+              <div style="font-family: 'Times New Roman', serif; line-height: 1.4;">
+                <p style="color: red; font-weight: bold; font-size: 16px;">⚠️ WARNING! CRITICAL ALERT! ⚠️</p>
+                <p>Our security scan has detected 147 DANGEROUS viruses on your Windows 98!</p>
+                <p>These viruses are stealing your passwords and watching you through the webcam.</p>
+                <p style="font-size: 16px; text-align: center;"><a href="#" style="color: red; text-decoration: blink;">CLICK HERE TO REMOVE ALL VIRUSES NOW!</a></p>
+                <p style="font-size: 6px; color: #999;">By clicking, you agree to install 245 additional viruses</p>
+              </div>
+            </div>
+            
+            <div id="spam3" class="email-body" style="display: none;">
+              <div style="border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 10px;">
+                <div><strong>From:</strong> Microsoft Tech Support &lt;tech.support@microsoftt.ru&gt;</div>
+                <div><strong>Subject:</strong> DO NOT REDEEM THE GIFT CARDS!!</div>
+                <div><strong>Date:</strong> Friday, October 4, 2025 5:37 AM</div>
+                <div><strong>To:</strong> tasnimzia98@email.com</div>
+              </div>
+              <div style="font-family: 'Times New Roman', serif; line-height: 1.4;">
+                <p style="color: red; font-weight: bold; font-size: 16px;">YOUR COMPUTER HAS VIRUS!! PLEASE CALL IMMEDIATELY!!</p>
+                <p>Hello ma'am this is Steve Johnson from Microsoft technical department. We have detected suspicious activity from your computer IP address 492.168.1.1</p>
+                <p>Your bank account is being hacked right now! You must follow these steps immediately:</p>
+                <ol>
+                  <li>Go to nearest store</li>
+                  <li>Buy Google Play or iTunes gift cards worth $500</li>
+                  <li>Call me back at +91-SCAM-NUMBER</li>
+                  <li>I will give instructions how to fix</li>
+                </ol>
+                <p style="font-size: 18px; font-weight: bold; color: red;">DO NOT REDEEM IT!!! DO NOT REDEEM!!! MADAM DO NOT REDEEM THE CARD!!!</p>
+                <p>Each minute you wait hackers are stealing $100 from your bank account!</p>
+                <p>Sincerely,<br>Steve Johnson<br>Microsoft Windows Technical Department<br>Head Office: Delhi, India</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Status Bar -->
+      <div style="padding: 2px 5px; background: silver; border-top: 1px solid #999; font-size: 12px;">
+        <span>5 message(s), 2 unread</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="window" id="minesweeperWindow">
+    <div class="title-bar">
+      <div class="title-bar-text">
+        <img src="https://win98icons.alexmeub.com/icons/png/mshearts-4.png" alt="">
+        Minesweeper
+      </div>
+      <div class="title-bar-controls">
+        <button aria-label="Close" onclick="toggleWindow('minesweeperWindow')"></button>
+      </div>
+    </div>
+    <div class="window-body"><p>💣 Not available. Please install more RAM.</p></div>
+  </div>
+
+  <div class="window" id="recycleWindow">
+    <div class="title-bar">
+      <div class="title-bar-text">
+        <img src="https://win98icons.alexmeub.com/icons/png/recycle_bin_full-4.png" alt="">
+        Recycle Bin
+      </div>
+      <div class="title-bar-controls">
+        <button aria-label="Close" onclick="toggleWindow('recycleWindow')"></button>
+      </div>
+    </div>
+    <div class="window-body">
+      <ul>
+        <li>old_resume_final_FINAL_v2.doc</li>
+        <li>broken_ai_model.zip</li>
+        <li>hope.png</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="window" id="installingClippyWindow" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 250px; z-index: 9999;">
+    <div class="title-bar">
+      <div class="title-bar-text">
+        <img src="https://win98icons.alexmeub.com/icons/png/install_wizard-0.png" alt="">
+        Installing Clippy
+      </div>
+      <div class="title-bar-controls">
+        <button aria-label="Close" onclick="toggleWindow('installingClippyWindow')"></button>
+      </div>
+    </div>
+    <div class="window-body">
+      <p>Installing Clippy...</p>
+      <div style="border: 1px inset gray; background: white; width: 100%; height: 20px;">
+        <div id="clippyProgress" style="background: navy; height: 100%; width: 0%;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="window" id="stickyNoteWindow" style="display: block; position: absolute; top: 20px; left: calc(100% - 260px); width: 220px; background: #ffff88;">
+    <div class="title-bar">
+      <div class="title-bar-text">
+        <img src="https://win98icons.alexmeub.com/icons/png/note-0.png" alt="">
+        Sticky Note
+      </div>
+      <div class="title-bar-controls">
+        <button aria-label="Close" onclick="showStickyError()"></button>
+      </div>
+    </div>
+    <div class="window-body" style="font-size: 14px;">
+      <p><b>📌 Contact Me</b></p>
+      <p><b>Email:</b><br>tasnimzia98@email.com</p>
+      <p><b>GitHub:</b><br><a href="https://github.com/ZiaBytesCookies" target="_blank">ZiaBytesCookies</a></p>
+      <p><b>LinkedIn:</b><br><a href="https://linkedin.com/in/tasnim-zia-proma" target="_blank">/tasnim-zia-proma</a></p>
+    </div>
+  </div>
+
+  <div class="window" id="resumeWindow" style="display: none; width: 600px;">
+    <div class="title-bar">
+      <div class="title-bar-text">
+        <img src="https://win98icons.alexmeub.com/icons/png/user_card.png" alt="">
+        Resume
+      </div>
+      <div class="title-bar-controls">
+        <button aria-label="Close" onclick="toggleWindow('resumeWindow')"></button>
+      </div>
+    </div>
+    <div class="window-body" style="font-size: 13px;">
+      <p style="text-align: center; margin-bottom: 4px;"><b>Tasnim Zia Proma</b></p>
+      <!-- View full resume link -->
+      <div style="margin-top: 0; font-size: 13px; text-align: right;">
+        <a href="resume.pdf" target="_blank" style="color: blue; text-decoration: underline;">
+          View full resume
+        </a>
+      </div>
+      <div style="display: flex; gap: 10px; align-items: start; margin-bottom: 10px;">
+        <!-- Profile Image with White Background -->
+        <div style="background: white; padding: 4px; border: 2px inset gray;">
+          <img src="zia.png" alt="Zia's Resume" style="max-width: 120px; height: auto; display: block;">
+        </div>
+
+        <!-- Bio Text -->
+        <div style="font-size: 13px; line-height: 1.4; max-width: 400px;">
+          <p><b>Bio</b></p>
+          <p style="margin: 0;">
+            Results-driven individual with expertise in optimizing workflows, managing multilingual projects, and enhancing operational efficiency through data analytics and automation tools. Passionate about bridging technology and business to drive innovation and achieve strategic goals.
+          </p>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 10px;">
+        <!-- Left: Skills -->
+        <div style="flex: 1; min-width: 220px;">
+          <p><b>Skills Overview</b></p>
+          <div style="display: grid; gap: 11px; grid-template-columns: 1fr;">
+            <div style="height: 50px; border: 2px groove #ccc; background: white; padding: 5px; font-size: 13px;">
+              <b>Data Science</b><br>
+              • Python • Pandas • scikit-learn • Visualization • Model Evaluation • Statistics
+            </div>
+
+            <div style="height: 50px; border: 2px groove #ccc; background: white; padding: 5px; font-size: 13px;">
+              <b>Data Analysis</b><br>
+              • Google Sheets • Power BI • Looker Studio • Excel
+            </div>
+
+            <div style="height: 50px; border: 2px groove #ccc; background: white; padding: 5px; font-size: 13px;">
+              <b>Automation</b><br>
+              • Google Apps Script • Airtable • Zapier
+            </div>
+
+            <div style="height: 50px; border: 2px groove #ccc; background: white; padding: 5px; font-size: 13px;">
+              <b>Programming</b><br>
+              • Python • JavaScript • SQL • C++ • PyTorch • TensorFlow • OpenCV
+            </div>
+
+            <div style="height:50px; border: 2px groove #ccc; background: white; padding: 5px; font-size: 13px;">
+              <b>Web Development</b><br>
+              • HTML • CSS • Bootstrap
+            </div>
+
+            <div style="height: 50px; border: 2px groove #ccc; background: white; padding: 5px; font-size: 13px;">
+              <b>Soft Skills</b><br>
+              • Leadership • Communication • Problem Solving • Mentorship
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right: Experience and Education -->
+        <div style="flex: 1; min-width: 250px; display: flex; flex-direction: column; gap: 8px;">
+          <p style="margin-bottom: 4px;"><b>Work Experience</b></p>
+          <div style="border: 2px groove #ccc; background: white; padding: 8px; font-size: 13px;">
+            <ul style="padding-left: 18px; margin: 0;">
+              <li><b>Program Manager</b><br>Invisible Technologies · Remote<br><i>Feb '25 – Present</i></li><br>
+              <li><b>Senior Operations Analyst</b><br>Invisible Technologies · Remote<br><i>May '24 – Jan '25</i></li><br>
+              <li><b>Creative Team Lead</b><br>Invisible Technologies · Remote<br><i>Jan '23 – Apr '24</i></li><br>
+              <li><b>Advanced AI Data Trainer</b><br>Invisible Technologies · Remote<br><i>Oct '22 – Dec '22</i></li><br>
+              <li><b>Teaching Assistant</b><br>Independent University, Bangladesh<br><i>Oct '18 – Mar '20</i></li>
+            </ul>
+          </div>
+
+          <p style="margin-bottom: 4px;"><b>Education</b></p>
+          <div style="border: 2px groove #ccc; background: white; padding: 8px; font-size: 13px;">
+            <ul style="padding-left: 18px; margin: 0;">
+              <li><b>BTU Cottbus–Senftenberg</b><br>MS in Artificial Intelligence</li><br>
+              <li><b>Independent University, Bangladesh</b><br>BS in CSE · Graduated: Oct '21</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Taskbar -->
+  <div class="taskbar">
+    <button class="start-button" onclick="toggleStartMenu()">
+      <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" alt="Start">
+      Start
+    </button>
+    <div style="margin-left: auto; padding-right: 10px;">🕔 4:20 PM</div>
+  </div>
+
+  <div id="clippy" style="display: none;">
+    <img src="clippy.gif" alt="Clippy" />
+    <div id="clippy-bubble"></div>
+  </div>
+
+  <div class="window" id="stickyErrorWindow" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 260px; z-index: 9999;">
+    <div class="title-bar">
+      <div class="title-bar-text">
+        <img src="https://win98icons.alexmeub.com/icons/png/msg_error-0.png" alt="">
+        Error
+      </div>
+      <div class="title-bar-controls">
+        <button aria-label="Close" onclick="hideStickyError()"></button>
+      </div>
+    </div>
+    <div class="window-body">
+      <p>Nice try. You can't get rid of me that easily.</p>
+      <div style="text-align: right;">
+        <button onclick="hideStickyError()">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="window" id="contextPopupWindow" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 280px; z-index: 9999;">
+    <div class="title-bar">
+      <div class="title-bar-text">
+        <img src="https://win98icons.alexmeub.com/icons/png/msg_info-0.png" alt="">
+        Message
+      </div>
+      <div class="title-bar-controls">
+        <button aria-label="Close" onclick="hideContextWindow()"></button>
+      </div>
+    </div>
+    <div class="window-body">
+      <p></p>
+      <div style="text-align: right;"><button onclick="hideContextWindow()">OK</button></div>
+    </div>
+  </div>
+
+  <!-- Add this terminal window after the other windows -->
+  <div class="window" id="terminalWindow" style="width: 500px; display: none;">
+    <div class="title-bar">
+      <div class="title-bar-text">
+        <img src="https://win98icons.alexmeub.com/icons/png/console_prompt-0.png" alt="">
+        MS-DOS Prompt
+      </div>
+      <div class="title-bar-controls">
+        <button aria-label="Close" onclick="toggleWindow('terminalWindow')"></button>
+      </div>
+    </div>
+    <div class="window-body" style="padding: 0; margin: 0; position: relative; height: 300px; overflow: hidden;">
+      <div id="terminal-output" style="background-color: #000; color: #aaa; padding: 8px; font-family: 'Courier New', monospace; height: calc(100% - 30px); max-height: 270px; overflow-y: scroll; white-space: pre; letter-spacing: 0; line-height: 1.3; font-size: 14px; box-sizing: border-box;">
+Microsoft(R) Windows 98
+(C)Copyright Microsoft Corp 1981-1998.
+
+C:\WINDOWS><span id="command-line" style="color: #fff">cd funstuff</span>
+
+C:\FUNSTUFF><span class="blinking-cursor">_</span>
+      </div>
+      <div style="position: absolute; bottom: 0; left: 0; right: 0; background-color: #000; height: 30px;">
+        <input id="terminal-input" type="text" style="width: 100%; height: 100%; box-sizing: border-box; background: #000; color: #aaa; font-family: 'Courier New', monospace; border: none; padding: 0 8px; margin: 0; font-size: 14px; outline: none;" onkeydown="handleTerminalInput(event)" onfocus="this.value = this.value">
+      </div>
+    </div>
+  </div>
+
+  <!-- Add this Internet Explorer window -->
+  <div class="window" id="ieWindow" style="width: 700px; height: 500px; display: none;">
+    <div class="title-bar">
+      <div class="title-bar-text">
+        <img src="https://win98icons.alexmeub.com/icons/png/msie1-2.png" alt="">
+        Internet Explorer
+      </div>
+      <div class="title-bar-controls">
+        <button aria-label="Minimize"></button>
+        <button aria-label="Maximize"></button>
+        <button aria-label="Close" onclick="toggleWindow('ieWindow')"></button>
+      </div>
+    </div>
+    <div class="window-body" style="padding: 0; margin: 0; display: flex; flex-direction: column; height: calc(100% - 20px); overflow: hidden;">
+      <!-- Toolbar -->
+      <div style="padding: 4px; background: silver; border-bottom: 1px solid #999;">
+        <button onclick="navigateIE('back')" style="min-width: 24px;">◀</button>
+        <button onclick="navigateIE('forward')" style="min-width: 24px;">▶</button>
+        <button onclick="navigateIE('refresh')" style="margin-left: 2px;">Refresh</button>
+        <span style="margin-left: 10px; margin-right: 5px;">Address:</span>
+        <input type="text" id="ie-address-bar" style="flex-grow: 1; width: 70%;" value="https://github.com/ZiaBytesCookies" readonly>
+        <button style="margin-left: 5px;">Go</button>
+      </div>
+      
+      <!-- Tabs -->
+      <div style="padding: 3px 5px 0 5px; background: #ddd; border-bottom: 1px solid #999; display: flex;">
+        <div id="github-tab" class="ie-tab active-tab" onclick="switchIETab('github')" style="padding: 3px 8px; margin-right: 5px; border: 1px solid #999; border-bottom: none; background: white; cursor: pointer; border-top-left-radius: 3px; border-top-right-radius: 3px;">
+          <strong>GitHub</strong>
+        </div>
+        <div id="linkedin-tab" class="ie-tab" onclick="switchIETab('linkedin')" style="padding: 3px 8px; margin-right: 5px; border: 1px solid #999; border-bottom: none; background: #ddd; cursor: pointer; border-top-left-radius: 3px; border-top-right-radius: 3px;">
+          <strong>LinkedIn</strong>
+        </div>
+        <div id="blogs-tab" class="ie-tab" onclick="switchIETab('blogs')" style="padding: 3px 8px; margin-right: 5px; border: 1px solid #999; border-bottom: none; background: #ddd; cursor: pointer; border-top-left-radius: 3px; border-top-right-radius: 3px;">
+          <strong>Blogs</strong>
+        </div>
+      </div>
+      
+      <!-- Content -->
+      <div style="flex: 1; overflow: hidden; position: relative;">
+        <!-- GitHub Content -->
+        <div id="github-content" class="ie-content" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: auto; background: white; display: block;">
+          <div style="padding: 15px; font-family: Arial, sans-serif;">
+            <div style="display: flex; align-items: flex-start;">
+              <img src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" style="width: 50px; height: 50px; margin-right: 15px;">
+              <div>
+                <h2 style="margin-top: 0;">ZiaBytesCookies</h2>
+                <p>🍪</p>
+                <p><strong>Tasnim Zia Proma</strong></p>
+                <p>I am a Computer Science and Engineering graduate currently pursuing a Master's in Artificial Intelligence, with a passion for bridging technology and business.</p>
+                <hr>
+                <h3>Repositories</h3>
+                <ul>
+                  <li><strong>portfolio</strong> - Windows 98 themed portfolio site</li>
+                  <li><strong>My-data-analyst-portfolio</strong> - Data analysis projects</li>
+                  <li><strong>Hist-Tree</strong> - Interactive history visualization</li>
+                  <li><strong>encoder</strong> - Python encoding utility</li>
+                  <li><strong>regex-visualizer</strong> - Regular expression visualization tool</li>
+                  <li><strong>about-me</strong> - Personal bio page</li>
+                </ul>
+                <p>Joined GitHub: April 2025</p>
+                <div style="margin-top: 15px;">
+                  <button onclick="window.open('https://github.com/ZiaBytesCookies', '_blank')">View Actual GitHub Profile</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- LinkedIn Content -->
+        <div id="linkedin-content" class="ie-content" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: auto; background: white; display: none;">
+          <div style="padding: 15px; font-family: Arial, sans-serif;">
+            <div style="display: flex; align-items: flex-start;">
+              <div style="width: 50px; height: 50px; margin-right: 15px; display: flex; align-items: center; justify-content: center;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" style="width: 45px; height: 45px;">
+              </div>
+              <div>
+                <h2 style="margin-top: 0; color: #0077b5;">Tasnim Zia Proma</h2>
+                <p><strong>Program Manager at Invisible Technologies</strong></p>
+                <p>Master's student in Artificial Intelligence | Data Science Enthusiast</p>
+                <hr>
+                <h3>Experience</h3>
+                <ul>
+                  <li><strong>Program Manager</strong> - Invisible Technologies (2025 - Present)</li>
+                  <li><strong>Senior Operations Analyst</strong> - Invisible Technologies (2024 - 2025)</li>
+                  <li><strong>Creative Team Lead</strong> - Invisible Technologies (2023 - 2024)</li>
+                  <li><strong>Advanced AI Data Trainer</strong> - Invisible Technologies (2022)</li>
+                  <li><strong>Teaching Assistant</strong> - Independent University, Bangladesh (2018 - 2020)</li>
+                </ul>
+                <h3>Education</h3>
+                <ul>
+                  <li><strong>BTU Cottbus–Senftenberg</strong> - MS in Artificial Intelligence</li>
+                  <li><strong>Independent University, Bangladesh</strong> - BS in CSE (2021)</li>
+                </ul>
+                <div style="margin-top: 15px;">
+                  <button onclick="window.open('https://www.linkedin.com/in/tasnim-zia-proma/', '_blank')">View Actual LinkedIn Profile</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Blogs Content -->
+        <div id="blogs-content" class="ie-content" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: auto; background: white; display: none;">
+          <div style="padding: 15px; font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+            <img src="https://win98icons.alexmeub.com/icons/png/html-1.png" style="width: 64px; height: 64px; margin-bottom: 20px;">
+            <h2 style="margin-top: 0; text-align: center;">Blogs coming soon! Maybe. Maybe not.</h2>
+            <div style="margin-top: 20px; text-align: center; padding: 15px; border: 1px dashed #999; background: #f0f0f0; width: 80%; max-width: 400px;">
+              <p style="color: #555;">This page is under construction.</p>
+              <p style="font-size: 12px; color: #777; margin-top: 20px;">Last updated: 10/05/1998</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Status bar -->
+      <div style="padding: 2px 5px; background: silver; border-top: 1px solid #999; font-size: 12px;">
+        <span id="ie-status">https://github.com/ZiaBytesCookies</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

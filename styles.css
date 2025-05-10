@@ -1,0 +1,454 @@
+body {
+  background: url('wallpaper98.png') no-repeat center center fixed;
+  background-size: cover;
+  font-family: "MS Sans Serif", sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100vh;
+}
+
+.desktop {
+  display: grid;
+  grid-auto-flow: column; /* Fill vertically first, then move to next column */
+  grid-template-rows: repeat(auto-fill, minmax(90px, auto)); /* Vertical arrangement */
+  grid-auto-columns: 80px; /* Column width */
+  justify-content: start;
+  align-content: start;
+  height: calc(100vh - 40px); /* Leave space for taskbar */
+  padding: 10px;
+  overflow: hidden; /* No scrolling */
+}
+
+.icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70px;         /* Between original 60px and big 80px */
+  margin: 10px;
+  font-size: 13px;     /* Just a nudge bigger */
+  color: white;
+  cursor: pointer;
+}
+
+.icon img {
+  width: 40px;         /* Between 32px and 48px */
+  height: 40px;
+  margin-bottom: 4px;
+}
+
+.window {
+  position: absolute;
+  top: 80px;
+  left: 80px;
+  width: 320px;
+  z-index: 10;
+  display: none;
+}
+
+.taskbar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 40px;
+  background: silver;
+  border-top: 2px solid white;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 2px 5px;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px gray;
+}
+
+.start-button {
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.start-menu {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  width: 160px;
+  background: silver;
+  border: 2px outset #fff;
+  padding: 5px;
+  display: none;
+}
+
+.start-menu p {
+  margin: 0;
+  padding: 5px;
+  background: #c0c0c0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.start-menu p:hover {
+  background: navy;
+  color: white;
+}
+
+.title-bar {
+  cursor: move;
+}
+
+#bsod {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #0000aa;
+  color: white;
+  font-family: 'Courier New', monospace;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: none;
+  padding: 20px;
+}
+
+#bsod p {
+  white-space: pre-wrap;
+}
+
+#contextMenu {
+  position: absolute;
+  display: none;
+  background: #c0c0c0;
+  border: 2px solid #fff;
+  border-bottom-color: #808080;
+  border-right-color: #808080;
+  font-family: "MS Sans Serif", sans-serif;
+  font-size: 13px;
+  width: 180px;
+  z-index: 9999;
+  box-shadow: inset -1px -1px #000, inset 1px 1px #fff;
+}
+
+#contextMenu .item {
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  position: relative;
+}
+
+#contextMenu .item:hover {
+  background-color: navy;
+  color: white;
+  border-color: #000;
+}
+
+.wallpaper-item .submenu {
+  position: absolute;
+  display: none;
+  left: 180px;
+  top: 0;
+  background: #c0c0c0;
+  border: 2px solid #fff;
+  border-bottom-color: #808080;
+  border-right-color: #808080;
+  width: 120px;
+  z-index: 10000;
+  box-shadow: inset -1px -1px #000, inset 1px 1px #fff;
+}
+
+.wallpaper-item:hover .submenu {
+  display: block;
+}
+
+.submenu-item {
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  cursor: pointer;
+  color: black;
+}
+
+.submenu-item:hover {
+  background-color: navy;
+  color: white;
+  border-color: #000;
+}
+
+#clippy {
+  position: fixed;
+  bottom: 40px;
+  right: 10px;
+  width: 80px;
+  z-index: 1000;
+}
+
+#clippy img {
+  width: 100%;
+}
+
+#clippy-bubble {
+  position: absolute;
+  bottom: 90px;
+  right: 0;
+  background: #ffffe1;
+  border: 2px solid #000;
+  padding: 8px;
+  font-size: 12px;
+  width: 180px;
+  font-family: 'MS Sans Serif', sans-serif;
+  box-shadow: 3px 3px #808080;
+  display: none;
+}
+
+/* Icon spacing rules */
+.start-button img,
+.start-menu img,
+.title-bar-text img {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.window-body {
+  font-size: 13px; /* or 16px if you want it even bigger */
+}
+
+/* Portfolio folder styling */
+.portfolio-folder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  padding: 10px;
+  width: 100px;
+}
+
+.portfolio-folder:hover {
+  background-color: rgba(0, 0, 128, 0.1);
+}
+
+.portfolio-folder:active {
+  background-color: rgba(0, 0, 128, 0.2);
+}
+
+.portfolio-folder img {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 8px;
+}
+
+/* Portfolio file styling */
+.portfolio-file {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  padding: 10px;
+  width: 100px;
+}
+
+.portfolio-file:hover {
+  background-color: rgba(0, 0, 128, 0.1);
+}
+
+.portfolio-file:active {
+  background-color: rgba(0, 0, 128, 0.2);
+}
+
+.portfolio-file img {
+  width: 38px;
+  height: 38px;
+  margin-bottom: 8px;
+}
+
+/* Terminal styling */
+#terminal-output {
+  background-color: #000;
+  color: #aaa;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.3;
+  letter-spacing: 0;
+  white-space: pre;
+  tab-size: 8;
+}
+
+#terminal-input {
+  outline: none;
+  padding: 5px;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+}
+
+.blinking-cursor {
+  animation: blink 1s step-end infinite;
+  color: #fff;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Folder tree styling */
+.tree-item {
+  white-space: nowrap;
+  cursor: pointer;
+  padding: 2px 4px;
+  font-size: 12px;
+}
+
+.tree-item:hover {
+  background-color: rgba(0, 0, 128, 0.1);
+}
+
+.tree-item:active, 
+.tree-item.active {
+  background-color: navy;
+  color: white;
+}
+
+.tree-folder {
+  position: relative;
+}
+
+.tree-open-folder {
+  position: relative;
+  font-weight: bold;
+}
+
+/* Internet Explorer styles */
+.ie-tab {
+  padding: 3px 8px;
+  margin-right: 5px;
+  border: 1px solid #999;
+  border-bottom: none;
+  cursor: pointer;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  font-size: 12px;
+  min-width: 70px;
+  text-align: center;
+  user-select: none;
+}
+
+.ie-tab:hover {
+  background-color: #f0f0f0 !important;
+}
+
+.ie-tab.active-tab {
+  background: white !important;
+  position: relative;
+  z-index: 1;
+  font-weight: bold;
+}
+
+.ie-content {
+  border-top: none;
+  background: white;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  /* Adjust desktop icons to flow better on smaller screens */
+  .desktop {
+    grid-auto-columns: 70px; /* Slightly smaller columns */
+    gap: 5px;
+  }
+  
+  .icon {
+    width: 60px; /* Smaller icons */
+    margin: 5px;
+    font-size: 12px;
+  }
+  
+  .icon img {
+    width: 32px;
+    height: 32px;
+  }
+  
+  /* Ensure windows fit on screen */
+  .window {
+    max-width: 90vw !important; /* Prevent windows from going off-screen */
+    max-height: 80vh !important;
+    top: 10vh !important; /* Position closer to top */
+    left: 5vw !important;
+  }
+  
+  /* Ensure content is scrollable within windows */
+  .window-body {
+    overflow: auto;
+    max-height: calc(80vh - 40px); /* Adjust for window title bar */
+  }
+  
+  /* Adjust IE tabs for smaller screens */
+  .ie-tab {
+    min-width: auto;
+    padding: 3px 5px;
+    font-size: 11px;
+  }
+}
+
+/* Extra adjustments for very small screens (mobile phones) */
+@media (max-width: 480px) {
+  .desktop {
+    grid-auto-columns: 60px; /* Even smaller columns */
+  }
+  
+  .icon {
+    width: 50px;
+    font-size: 10px;
+  }
+  
+  .icon img {
+    width: 28px;
+    height: 28px;
+  }
+  
+  /* Make windows full width on mobile */
+  .window {
+    width: 90vw !important;
+    left: 5vw !important;
+    right: 5vw !important;
+  }
+  
+  /* Stack email interface on small screens */
+  #emailWindow .window-body > div {
+    flex-direction: column !important;
+  }
+  
+  /* Adjust email folder pane width */
+  #emailWindow .window-body > div > div:first-child {
+    width: 100% !important;
+    border-right: none !important;
+    border-bottom: 1px solid #999;
+    max-height: 120px;
+  }
+  
+  /* Make buttons in toolbars stack if needed */
+  #emailWindow .window-body > div:first-child {
+    flex-wrap: wrap;
+  }
+  
+  /* Make resume layout more mobile-friendly */
+  #resumeWindow .window-body > div {
+    flex-direction: column !important;
+  }
+  
+  #resumeWindow .window-body > div > div {
+    width: 100% !important;
+    min-width: auto !important;
+  }
+  
+  /* Adjust taskbar for mobile */
+  .taskbar {
+    height: 36px;
+  }
+  
+  /* Improve touch targets for buttons */
+  button {
+    min-height: 28px;
+    padding: 4px 8px;
+  }
+} 
